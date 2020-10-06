@@ -58,3 +58,8 @@ only print the D3D WARP driver:
 ```bat
 docker run --isolation=process --device class/5B45201D-F2F2-4F3B-85BB-30FF1F953599 -v %CD%\samples:C:\src -it build_tools:latest powershell "mkdir C:\src\enum_adapters\build; cd C:\src\enum_adapters\build; cmake -G 'Visual Studio 15 2017 Win64' ..; cmake --build . --config Debug; .\Debug\enum_adapters"
 ```
+
+## References
+
+A good write-up of all the problems that can be encountered when working with
+docker on Windows is summarized by [John Freeman](https://jfreeman.dev/blog/2019/07/09/what-i-learned-making-a-docker-container-for-building-c++-on-windows/)
