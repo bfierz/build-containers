@@ -1,8 +1,8 @@
 @echo off
 :: A number of helpful resources about installing the build tools:
-:: * Official guide: https://docs.microsoft.com/en-us/visualstudio/install/build-tools-container
-:: * Advanced example: https://docs.microsoft.com/en-us/visualstudio/install/build-tools-container
-:: * Known issues: https://docs.microsoft.com/en-us/visualstudio/install/build-tools-container-issues
+:: * Official guide: https://learn.microsoft.com/en-us/visualstudio/install/build-tools-container
+:: * Advanced example: https://learn.microsoft.com/en-us/visualstudio/install/advanced-build-tools-container
+:: * Known issues: https://learn.microsoft.com/en-us/visualstudio/install/build-tools-container-issues
 :: * Collect error logs: https://devblogs.microsoft.com/setup/installing-build-tools-for-visual-studio-2017-in-a-docker-container/
 
 :: The following blog-post contains a reminer about the licensing:
@@ -22,7 +22,10 @@ if /i %VS_VER%==2017 (
 ) else ( 
 if /i %VS_VER%==2019 (
     goto install_vs2019
-)))
+) else ( 
+if /i %VS_VER%==2022 (
+    goto install_vs2022
+))))
 
 :install_vs2015
 :: Install Visual Studio Build Tools 2015
@@ -37,9 +40,9 @@ goto:eof
 :: Install Visual Studio Build Tools 2017
 :: List of potential packages are available here:
 :: * https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2017
-choco install -y visualstudio2017buildtools --force --package-parameters ^"--passive --nocache --noUpdateInstaller --locale en-US^
+choco install -y visualstudio2017buildtools --force --package-parameters ^"--passive --norestart --nocache --noUpdateInstaller --locale en-US^
  --add Microsoft.VisualStudio.Workload.MSBuildTools^
- --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended^
+ --add Microsoft.VisualStudio.Workload.VCTools^
  --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core^
  --add Microsoft.VisualStudio.Component.VC.140^
  --add Microsoft.VisualStudio.Component.VC.Tools.ARM^
@@ -51,9 +54,9 @@ goto:eof
 :: Install Visual Studio Build Tools 2019
 :: List of potential packages are available here:
 :: * https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2019
-  install -y visualstudio2019buildtools --package-parameters ^"--passive --nocache --noUpdateInstaller --locale en-US^
+choco install -y visualstudio2019buildtools --package-parameters ^"--passive --norestart --nocache --noUpdateInstaller --locale en-US^
  --add Microsoft.VisualStudio.Workload.MSBuildTools^
- --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended^
+ --add Microsoft.VisualStudio.Workload.VCTools^
  --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core^
  --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang^
  --add Microsoft.VisualStudio.Component.VC.140^
@@ -66,4 +69,34 @@ goto:eof
  --add Microsoft.VisualStudio.Component.VC.Tools.ARM^
  --add Microsoft.VisualStudio.Component.VC.Tools.ARM64^
  --includeRecommended^"
+goto:eof
+
+
+:install_vs2022
+:: Install Visual Studio Build Tools 2022
+:: List of potential packages are available here:
+:: * https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2022
+curl -SL --output vs_buildtools.exe https://aka.ms/vs/17/release/vs_buildtools.exe
+call C:\Temp\CallVisualStudioInstaller.cmd vs_buildtools.exe --quiet --wait --norestart --nocache^
+ --add Microsoft.VisualStudio.Workload.MSBuildTools^
+ --add Microsoft.VisualStudio.Workload.VCTools^
+ --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core^
+ --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang^
+ --add Microsoft.VisualStudio.Component.VC.140^
+ --add Microsoft.VisualStudio.Component.VC.v141.x86.x64^
+ --add Microsoft.VisualStudio.Component.VC.v141.ARM^
+ --add Microsoft.VisualStudio.Component.VC.v141.ARM64^
+ --add Microsoft.VisualStudio.Component.VC.14.29.16.11.ARM^
+ --add Microsoft.VisualStudio.Component.VC.14.29.16.11.ARM64^
+ --add Microsoft.VisualStudio.Component.VC.14.29.16.11.x86.x64^
+ --add Microsoft.VisualStudio.Component.VC.CoreIde^
+ --add Microsoft.VisualStudio.Component.VC.Llvm.Clang^
+ --add Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset^
+ --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64^
+ --add Microsoft.VisualStudio.Component.VC.Tools.ARM^
+ --add Microsoft.VisualStudio.Component.VC.Tools.ARM64^
+ --includeRecommended
+
+del /q vs_buildtools.exe
+
 goto:eof

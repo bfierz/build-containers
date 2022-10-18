@@ -4,7 +4,7 @@ $env:chocolateyUseWindowsCompression = 'true'
 # Download and install chocolatey.
 # The following link contains an alternative installation path if TLS 1.0 should be disabled
 # https://amionrails.wordpress.com/2018/02/20/how-to-install-chocolatey-inside-windows-container
-iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 # Disable progress bar for usage in docker
 choco feature disable -n showDownloadProgress

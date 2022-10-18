@@ -40,7 +40,7 @@ e.g. Windows Server Core should be used.
 host and container need to match. This variable required to set the correct
 Windows version.
 * VISUAL_STUDIO_VERSION: Visual Studio Build Tools version to install.
-Currently supported are 2015, 2017 and 2019.
+Currently supported are 2015, 2017, 2019 and 2022.
 
 ### Adding GPU support
 

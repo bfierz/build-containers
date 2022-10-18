@@ -10,12 +10,15 @@
 # https://docs.microsoft.com/en-us/windows/release-information
 # A list of images can be found here:
 # https://hub.docker.com/_/microsoft-windows
-ARG WINDOWS_IMAGE=mcr.microsoft.com/windows
-ARG WINDOWS_IMAGE_VERSION=10.0.18363.720
+ARG WINDOWS_IMAGE=mcr.microsoft.com/windows/servercore
+ARG WINDOWS_IMAGE_VERSION=ltsc2022
 FROM ${WINDOWS_IMAGE}:${WINDOWS_IMAGE_VERSION}
 
 # Label the Windows version for external identification
 LABEL Windows.Version = ${WINDOWS_IMAGE_VERSION}
+
+# Make the default setting explicit
+USER ContainerAdministrator
 
 # Reset the shell.
 SHELL ["powershell", "-NoLogo", "-ExecutionPolicy", "Bypass", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'Continue'; $verbosePreference='Continue';"]
@@ -32,8 +35,11 @@ RUN C:\Temp\InstallDevPackages.ps1
 # the Visual Studio Build Tools installer.
 SHELL ["cmd", "/S", "/C"]
 
+# Download collect.exe in case of an install failure.
+ADD https://aka.ms/vscollect.exe C:\Temp\collect.exe
+
 # Install Visual Studio
-ARG VISUAL_STUDIO_VERSION=2017
+ARG VISUAL_STUDIO_VERSION=2022
 ENV VS_VER=${VISUAL_STUDIO_VERSION}
 RUN C:\Temp\InstallVisualStudioBuildTools.cmd
 

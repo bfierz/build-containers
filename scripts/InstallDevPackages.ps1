@@ -25,10 +25,6 @@ choco install -y cmake.install --installargs "ADD_CMAKE_TO_PATH=System"
 choco install -y ninja
 choco install -y doxygen.install
 choco install -y opencppcoverage
-choco install -y llvm
-
-# Setup the conan package manager
-pip install conan
 
 # Make changes to path variable visible
 refreshenv

@@ -1,2 +1,1 @@
-$tag = helpers\Select-Image.ps1 -Image windows
-docker build --build-arg WINDOWS_IMAGE=mcr.microsoft.com/windows --build-arg WINDOWS_IMAGE_VERSION=$tag --build-arg VISUAL_STUDIO_VERSION=2017 -t build_tools:latest -m 2GB .
+docker build --build-arg WINDOWS_IMAGE=mcr.microsoft.com/windows/servercore --build-arg WINDOWS_IMAGE_VERSION=ltsc2022 --build-arg VISUAL_STUDIO_VERSION=2022 -t build_tools:latest -m 2GB .
